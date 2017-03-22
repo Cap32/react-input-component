@@ -7,7 +7,7 @@ A better alternative to react built-in input components
 
 1. Before you want to use built-in react inputs, you may need to what the hell are [controlled and uncontrolled inputs](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/)
 2. Controlled input is slow
-3. Controlled input has [bug](https://github.com/facebook/react/issues/3926)
+3. Controlled input has a [bug](https://github.com/facebook/react/issues/3926)
 
 
 ## Usage
@@ -22,7 +22,27 @@ import { Input } from 'react-input-component';
 
 export default () =>
     <Input value="no matter it is controlled or not, it just works." />
+```
 
+
+## Components
+
+- Input
+- TextArea
+- Select
+
+
+## Notes
+
+- Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support `checked`
+- To get the DOM, use `findDOMNOde(input)` or `input.dom`. (This `input` refs to an Input instance, like `<Input ref="input" />`)
+- Different from built-in input components, DOM value could be changed by user typing without updating `state` or `props`.
+
+
+## Installation
+
+```bash
+$ yarn add react-input-component
 ```
 
 

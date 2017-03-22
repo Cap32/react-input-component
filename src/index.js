@@ -26,7 +26,7 @@ export function createComponent(Comp, displayName) {
 			const key = isCheckable ? 'checked' : 'value';
 			const val = nextProps[key];
 			if (this.props[key] !== val) {
-				this.domNode[key] = val;
+				this.dom[key] = val;
 			}
 		}
 
@@ -41,7 +41,7 @@ export function createComponent(Comp, displayName) {
 				<Comp
 					{...other}
 					{...attrs}
-					ref={(domNode) => this.domNode = domNode}
+					ref={(dom) => this.dom = dom}
 				/>
 			);
 		}
