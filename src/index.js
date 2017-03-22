@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { findDOMNode } from 'react-dom';
 
 export function createComponent(Comp, displayName) {
-	return class FastInput extends Component {
+	return class Input extends Component {
 		static propTypes = {
 			value: PropTypes.oneOfType([
 				PropTypes.number,
@@ -13,13 +13,9 @@ export function createComponent(Comp, displayName) {
 
 		static displayName = displayName;
 
-		componentDidMount() {
-			this.domNode = findDOMNode(this);
-		}
-
 		componentWillReceiveProps({ value }) {
 			if (this.props.value !== value) {
-				this.domNode.value = value;
+				(this.dom = this.dom || findDOMNode(this)).value = value;
 			}
 		}
 
@@ -32,8 +28,7 @@ export function createComponent(Comp, displayName) {
 	};
 }
 
-const Input = createComponent('input', 'FastInput');
-
+export const TextArea = createComponent('textarea', 'TextArea');
+export const Select = createComponent('select', 'Select');
+export const Input = createComponent('input', 'Input');
 export default Input;
-export const FastInput = Input;
-export const FastTextArea = createComponent('textarea', 'FastTextArea');
