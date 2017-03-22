@@ -33,7 +33,7 @@ function createComponent(Comp, displayName) {
 		render() {
 			const { value, inputId, ...other } = this.props;
 			return (
-				<input {...other} defaultValue={value} key={inputId} />
+				<Comp {...other} defaultValue={value} key={inputId} />
 			);
 		}
 	};
