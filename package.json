@@ -24,6 +24,15 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
+  "keywords": [
+    "react",
+    "input",
+    "component",
+    "select",
+    "textarea",
+    "uncontrolled",
+    "controlled"
+  ],
   "author": "cap32",
   "license": "MIT",
   "peerDependencies": {
