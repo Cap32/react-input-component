@@ -1,6 +1,6 @@
 # react-input-component
 
-[![Build Status](https://travis-ci.org/Cap32/react-input-component.svg?branch=master)](https://travis-ci.org/Cap32/react-input-component)
+[![CircleCI](https://circleci.com/gh/Cap32/react-input-component.svg?style=shield)](https://circleci.com/gh/Cap32/react-input-component) [![Build Status](https://travis-ci.org/Cap32/react-input-component.svg?branch=master)](https://travis-ci.org/Cap32/react-input-component)
 
 🚀 A better alternative to react built-in input components
 
