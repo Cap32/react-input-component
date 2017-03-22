@@ -2,20 +2,18 @@
 import React from 'react';
 import assert from 'assert';
 import jsdom from 'jsdom';
+import { mount } from 'enzyme';
 import { FastInput, FastTextArea } from '../src';
-
-const html = '<!doctype html><html><body></body></html>';
-const doc = jsdom.jsdom(html);
-
-global.document = doc;
-global.window = doc.defaultView;
-global.navigator = global.window.navigator;
-
-const { mount } = require('enzyme');
 
 describe('react-fast-input', function () {
 	beforeEach(() => {
-		global.document = jsdom.jsdom(html);
+		global.document = jsdom.jsdom(
+			'<!doctype html><html><body></body></html>'
+		);
+		if (typeof window === 'undefined') {
+			global.window = global.document.defaultView;
+			global.navigator = global.window.navigator;
+		}
 	});
 
 	it('basic', function () {
@@ -27,35 +25,21 @@ describe('react-fast-input', function () {
 	it('update value', function () {
 		const prevText = 'hello world';
 		const nextText = 'awesome';
-		const wrapper = mount(<FastInput value={prevText} inputId="0" />);
+		const wrapper = mount(<FastInput value={prevText} />);
 
 		assert.equal(wrapper.find('input').get(0).value, prevText);
-		wrapper.setProps({ inputId: '1', value: nextText });
-		assert.equal(wrapper.find('input').get(0).value, nextText);
-	});
-
-	it('update warning', function () {
-		const prevText = 'hello world';
-		const nextText = 'awesome';
-		const wrapper = mount(<FastInput value={prevText} inputId="0" />);
-
-		assert.equal(wrapper.find('input').get(0).value, prevText);
-
-		// it will throw a warning becuase of missing `inputId` prop.
 		wrapper.setProps({ value: nextText });
-
-		// NOT equal
-		assert.notEqual(wrapper.find('input').get(0).value, nextText);
+		assert.equal(wrapper.find('input').get(0).value, nextText);
 	});
 
 	it('textrea', function () {
 		const prevText = 'hello world';
 		const nextText = 'awesome';
-		const wrapper = mount(<FastTextArea value={prevText} inputId="0" />);
+		const wrapper = mount(<FastTextArea value={prevText} />);
 
-		assert.equal(wrapper.find('input').get(0).value, prevText);
-		wrapper.setProps({ inputId: '1', value: nextText });
-		assert.equal(wrapper.find('input').get(0).value, nextText);
+		assert.equal(wrapper.find('textarea').get(0).value, prevText);
+		wrapper.setProps({ value: nextText });
+		assert.equal(wrapper.find('textarea').get(0).value, nextText);
 	});
 
 });
