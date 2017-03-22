@@ -1,8 +1,8 @@
 {
-  "name": "react-fast-input",
+  "name": "react-input-component",
   "version": "0.0.0",
-  "description": "react-fast-input",
-  "repository": "cap32/react-fast-input",
+  "description": "react-input-component",
+  "repository": "cap32/react-input-component",
   "scripts": {
     "prebuild": "rimraf ./dist ./lib ./es && mkdirp ./dist ./lib ./es",
     "build:cjs": "cross-env BABEL_ENV=cjs babel src -d lib",
@@ -26,8 +26,9 @@
   "jsnext:main": "es/index.js",
   "author": "cap32",
   "license": "MIT",
-  "dependencies": {
-    "warning": "^3.0.0"
+  "peerDependencies": {
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -49,7 +50,6 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-react": "^5.0.1",
     "jsdom": "^9.11.0",
-    "lodash.camelcase": "^4.3.0",
     "mkdirp": "^0.5.1",
     "mocha": "^3.1.2",
     "react": "^15.4.2",

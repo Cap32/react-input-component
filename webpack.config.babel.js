@@ -2,11 +2,8 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 const { name } = require('./package.json');
-const camelcase = require('lodash.camelcase');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
-
-// const isDev = process.env.NODE_ENV === 'development';
 
 const PROJECT_PATH = __dirname;
 const inProject = (...args) => resolve(PROJECT_PATH, ...args);
@@ -24,7 +21,7 @@ module.exports = (webpackEnv = {}) => {
 		output: {
 			filename: `${name}${minify ? '.min' : ''}.js`,
 			path: resolve(__dirname, 'dist'),
-			library: camelcase(name),
+			library: 'ReactInput',
 			libraryTarget: 'umd',
 		},
 		module: {
@@ -59,6 +56,7 @@ module.exports = (webpackEnv = {}) => {
 		},
 		externals: {
 			react: 'React',
+			'react-dom': 'ReactDom',
 		},
 	};
 
