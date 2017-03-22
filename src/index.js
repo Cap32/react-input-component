@@ -1,28 +1,48 @@
 
 import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
+
+const checkables = ['checkbox', 'radio'];
+const ReactComponent = React.PureComponent || Component;
 
 export function createComponent(Comp, displayName) {
-	return class Input extends Component {
+	const detectIsCheckable = (props) =>
+		Comp === 'input' && checkables.indexOf(props.type) > -1
+	;
+
+	return class Input extends ReactComponent {
 		static propTypes = {
 			value: PropTypes.oneOfType([
 				PropTypes.number,
 				PropTypes.string,
 			]),
+			checked: PropTypes.bool,
+			type: PropTypes.string,
 		};
 
 		static displayName = displayName;
 
-		componentWillReceiveProps({ value }) {
-			if (this.props.value !== value) {
-				(this.dom = this.dom || findDOMNode(this)).value = value;
+		componentWillReceiveProps(nextProps) {
+			const isCheckable = detectIsCheckable(nextProps);
+			const key = isCheckable ? 'checked' : 'value';
+			const val = nextProps[key];
+			if (this.props[key] !== val) {
+				this.domNode[key] = val;
 			}
 		}
 
 		render() {
-			const { value, ...other } = this.props;
+			const { value, checked, ...other } = this.props;
+			const isCheckable = detectIsCheckable(other);
+			const key = isCheckable ? 'defaultChecked' : 'defaultValue';
+			const val = isCheckable ? checked : value;
+			const attrs = { [key]: val };
+
 			return (
-				<Comp {...other} defaultValue={value} />
+				<Comp
+					{...other}
+					{...attrs}
+					ref={(domNode) => this.domNode = domNode}
+				/>
 			);
 		}
 	};

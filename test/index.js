@@ -5,7 +5,7 @@ import jsdom from 'jsdom';
 import { mount } from 'enzyme';
 import { Input, TextArea, Select } from '../src';
 
-describe('react-fast-input', function () {
+describe('react-input-component', function () {
 	beforeEach(() => {
 		global.document = jsdom.jsdom(
 			'<!doctype html><html><body></body></html>'
@@ -30,6 +30,26 @@ describe('react-fast-input', function () {
 		assert.equal(wrapper.find('input').get(0).value, prevValue);
 		wrapper.setProps({ value: nextValue });
 		assert.equal(wrapper.find('input').get(0).value, nextValue);
+	});
+
+	it('<Input type="checkbox" />', function () {
+		const prevValue = false;
+		const nextValue = true;
+		const wrapper = mount(<Input type="checkbox" checked={prevValue} />);
+
+		assert.equal(wrapper.find('input').get(0).checked, prevValue);
+		wrapper.setProps({ checked: nextValue });
+		assert.equal(wrapper.find('input').get(0).checked, nextValue);
+	});
+
+	it('<Input type="radio" />', function () {
+		const prevValue = false;
+		const nextValue = true;
+		const wrapper = mount(<Input type="radio" checked={prevValue} />);
+
+		assert.equal(wrapper.find('input').get(0).checked, prevValue);
+		wrapper.setProps({ checked: nextValue });
+		assert.equal(wrapper.find('input').get(0).checked, nextValue);
 	});
 
 	it('<TextArea />', function () {
