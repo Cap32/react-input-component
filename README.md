@@ -1,6 +1,8 @@
 # react-input-component
 
-A better alternative to react built-in input components
+[![Build Status](https://travis-ci.org/Cap32/react-input-component.svg?branch=master)](https://travis-ci.org/Cap32/react-input-component)
+
+🚀 A better alternative to react built-in input components
 
 
 ## Motivation
@@ -21,7 +23,7 @@ import React from 'react';
 import { Input } from 'react-input-component';
 
 export default () =>
-    <Input value="no matter it is controlled or not, it just works." />
+    <Input value="no matter it's controlled or not, it just works as expected" />
 ```
 
 
