@@ -9,7 +9,7 @@ const stringOrNumber = PropTypes.oneOfType([
 	PropTypes.string,
 ]);
 
-export function createComponent(Component, displayName) {
+function createComponent(Component, displayName) {
 	const detectIsCheckable = (props) =>
 		Component === 'input' && checkables.indexOf(props.type) > -1
 	;
