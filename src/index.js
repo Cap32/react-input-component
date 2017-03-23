@@ -1,17 +1,17 @@
 
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
 const checkables = ['checkbox', 'radio'];
-const ReactComponent = React.PureComponent || Component;
+const ReactComponent = React.PureComponent || React.Component;
 
 const stringOrNumber = PropTypes.oneOfType([
 	PropTypes.number,
 	PropTypes.string,
 ]);
 
-export function createComponent(Comp, displayName) {
+export function createComponent(Component, displayName) {
 	const detectIsCheckable = (props) =>
-		Comp === 'input' && checkables.indexOf(props.type) > -1
+		Component === 'input' && checkables.indexOf(props.type) > -1
 	;
 
 	return class Input extends ReactComponent {
@@ -45,7 +45,7 @@ export function createComponent(Comp, displayName) {
 			const attrs = { [key]: val };
 
 			return (
-				<Comp
+				<Component
 					{...other}
 					{...attrs}
 					ref={(dom) => this.dom = dom}
