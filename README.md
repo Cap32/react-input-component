@@ -5,18 +5,26 @@
 🚀 A better alternative to react built-in input components
 
 
-## Motivation
+## Motivations
 
 1. Before use built-in react inputs, you may need to know what the hell are [controlled and uncontrolled inputs](https://goshakkk.name/controlled-vs-uncontrolled-inputs-react/)
-2. Controlled input is slow
-3. Controlled input has a [bug](https://github.com/facebook/react/issues/3926)
+2. Controlled input has a [bug](https://github.com/facebook/react/issues/3926)
+3. Controlled input is slow
+4. Uncontrolled input is not powerful
 
 
-## Usage
+## Installation
+
+```bash
+$ yarn add react-input-component
+```
+
+
+## Usages
 
 Just like built-in input components, but no `defaultValue` prop.
 
-###### Example:
+###### Example
 
 ```js
 import React from 'react';
@@ -27,7 +35,7 @@ export default () =>
 ```
 
 
-## Components
+###### Components
 
 - Input
 - TextArea
@@ -37,14 +45,64 @@ export default () =>
 ## Notes
 
 - Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support `checked`, but not `defaultChecked`
-- To get the DOM, use `findDOMNode(input)` or `input.dom`. (This `input` refs to an Input instance, like `<Input ref="input" />`)
-- Different from built-in input components, DOM value could be changed by user typing without updating `state` or `props`
+- To get the DOM, use `findDOMNode(input)` or `input.dom`. (This `input` refs to an `Input` instance, like `<Input ref="input" />`)
+- DOM value could be changed by user typing without updating `state` or `props`
 
 
-## Installation
+## Caveat
 
-```bash
-$ yarn add react-input-component
+If `value` prop didn't changed, Input component would not re-render. So if you want to reset value by passing the prev `value`, it won't be updated.
+
+```js
+import React, { Component } from 'react';
+import { render, findDOMNode } from 'react-dom';
+import { Input } from 'react-input-component';
+
+class DemoReset extends Component {
+    state = { value: 'a' };
+
+    componentDidMount() {
+        findDOMNode(this).value = 'b'; // Simulate user typing
+
+        // Try to reset `value` to "a"
+        // It won't be updated because the new `value` equals the prev `value`
+        this.setState({ value: 'a' }); // => BAD
+    }
+
+    render() {
+        return (<Input {...this.state} />);
+    }
+}
+
+render(<DemoReset />, document.getElementById('root'));
+```
+
+To resolve this problem, you could change the DOM value directly, or add a special `updateKey` prop.
+
+`updateKey` helps Input component to decide to update. If `updateKey` changes, the DOM value would change.
+
+```js
+import React, { Component } from 'react';
+import { render, findDOMNode } from 'react-dom';
+import { Input } from 'react-input-component';
+
+class DemoReset extends Component {
+    state = { value: 'a' };
+
+    componentDidMount() {
+        findDOMNode(this).value = 'b'; // Simulate user typing
+
+        // Try to reset `value` to "a"
+        // Adding a new `updateKey` to force upate
+        this.setState({ value: 'a', updateKey: Math.rondom() }); // => GOOD
+    }
+
+    render() {
+        return (<Input {...this.state} />);
+    }
+}
+
+render(<DemoReset />, document.getElementById('root'));
 ```
 
 
