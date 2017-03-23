@@ -4,6 +4,11 @@ import React, { Component, PropTypes } from 'react';
 const checkables = ['checkbox', 'radio'];
 const ReactComponent = React.PureComponent || Component;
 
+const stringOrNumber = PropTypes.oneOfType([
+	PropTypes.number,
+	PropTypes.string,
+]);
+
 export function createComponent(Comp, displayName) {
 	const detectIsCheckable = (props) =>
 		Comp === 'input' && checkables.indexOf(props.type) > -1
@@ -11,27 +16,29 @@ export function createComponent(Comp, displayName) {
 
 	return class Input extends ReactComponent {
 		static propTypes = {
-			value: PropTypes.oneOfType([
-				PropTypes.number,
-				PropTypes.string,
-			]),
+			value: stringOrNumber,
 			checked: PropTypes.bool,
 			type: PropTypes.string,
+			updateKey: stringOrNumber,
 		};
 
 		static displayName = displayName;
 
 		componentWillReceiveProps(nextProps) {
+			const { props } = this;
 			const isCheckable = detectIsCheckable(nextProps);
 			const key = isCheckable ? 'checked' : 'value';
 			const val = nextProps[key];
-			if (this.props[key] !== val) {
+			if (nextProps.updateKey !== props.updateKey || props[key] !== val) {
 				this.dom[key] = val;
 			}
 		}
 
 		render() {
-			const { value, checked, ...other } = this.props;
+			const {
+				updateKey, // eslint-disable-line no-unused-vars
+				value, checked, ...other,
+			} = this.props;
 			const isCheckable = detectIsCheckable(other);
 			const key = isCheckable ? 'defaultChecked' : 'defaultValue';
 			const val = isCheckable ? checked : value;

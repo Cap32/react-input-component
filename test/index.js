@@ -22,7 +22,7 @@ describe('react-input-component', function () {
 		assert.equal(wrapper.find('input').get(0).value, text);
 	});
 
-	it('update input value', function () {
+	it('update value', function () {
 		const prevValue = 'hello world';
 		const nextValue = 'awesome';
 		const wrapper = mount(<Input value={prevValue} />);
@@ -75,6 +75,38 @@ describe('react-input-component', function () {
 		assert.equal(wrapper.find('select').get(0).value, prevValue);
 		wrapper.setProps({ value: nextValue });
 		assert.equal(wrapper.find('select').get(0).value, nextValue);
+	});
+
+	it('fail to update value if `prevValue` equals `nextValue`', function () {
+		const prevValue = 'hello world';
+		const nextValue = prevValue;
+		const wrapper = mount(<Input value={prevValue} />);
+
+		const dom = wrapper.find('input').get(0);
+
+		assert.equal(dom.value, prevValue);
+
+		// simulate user typing
+		dom.value = 'updated';
+
+		wrapper.setProps({ value: nextValue });
+		assert.notEqual(dom.value, nextValue); // notEqual
+	});
+
+	it('success to update value by providing a new `updateKey`', function () {
+		const prevValue = 'hello world';
+		const nextValue = prevValue;
+		const wrapper = mount(<Input value={prevValue} />);
+
+		const dom = wrapper.find('input').get(0);
+
+		assert.equal(dom.value, prevValue);
+
+		// simulate user typing
+		dom.value = 'updated';
+
+		wrapper.setProps({ value: nextValue, updateKey: Math.random() });
+		assert.equal(dom.value, nextValue); // equal
 	});
 
 });
