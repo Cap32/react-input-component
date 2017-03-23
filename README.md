@@ -16,7 +16,7 @@
 ## Installation
 
 ```bash
-$ yarn add react-input-component
+yarn add react-input-component
 ```
 
 
@@ -31,9 +31,10 @@ import React from 'react';
 import { Input } from 'react-input-component';
 
 export default () =>
-    <Input value="no matter it's controlled or not, it just works as expected" />
+    <Input value="feel free to type here..." />
 ```
 
+Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support `checked`, but not `defaultChecked`
 
 ###### Components
 
@@ -44,7 +45,8 @@ export default () =>
 
 ## Notes
 
-- Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support `checked`, but not `defaultChecked`
+- All styles are the same with react built-in components
+- All react built-in component's props are supported, except `defaultValue` and `defaultChecked`
 - To get the DOM, use `findDOMNode(input)` or `input.dom`. (This `input` refs to an `Input` instance, like `<Input ref="input" />`)
 - DOM value could be changed by user typing without updating `state` or `props`
 
@@ -58,7 +60,7 @@ import React, { Component } from 'react';
 import { render, findDOMNode } from 'react-dom';
 import { Input } from 'react-input-component';
 
-class DemoReset extends Component {
+class Bad extends Component {
     state = { value: 'a' };
 
     componentDidMount() {
@@ -74,7 +76,7 @@ class DemoReset extends Component {
     }
 }
 
-render(<DemoReset />, document.getElementById('root'));
+render(<Bad />, document.getElementById('root'));
 ```
 
 To resolve this problem, you could change the DOM value directly, or add a special `updateKey` prop.
@@ -86,7 +88,7 @@ import React, { Component } from 'react';
 import { render, findDOMNode } from 'react-dom';
 import { Input } from 'react-input-component';
 
-class DemoReset extends Component {
+class Good extends Component {
     state = { value: 'a' };
 
     componentDidMount() {
@@ -102,7 +104,7 @@ class DemoReset extends Component {
     }
 }
 
-render(<DemoReset />, document.getElementById('root'));
+render(<Good />, document.getElementById('root'));
 ```
 
 
