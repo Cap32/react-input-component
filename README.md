@@ -12,6 +12,8 @@
 3. Controlled input is slow
 4. Uncontrolled input is not powerful
 
+So I created this module to avoid the problems above. 
+
 
 ## Installation
 
@@ -22,7 +24,7 @@ yarn add react-input-component
 
 ## Usages
 
-Just like built-in input components, but no `defaultValue` prop.
+Just like built-in input components, but no `defaultValue` or `defaultChecked` prop.
 
 ###### Example
 
@@ -34,7 +36,6 @@ export default () =>
     <Input value="feel free to type here..." />
 ```
 
-Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support `checked`, but not `defaultChecked`
 
 ###### Components
 
@@ -45,15 +46,16 @@ Likewise, `<Input type="checkbox" />` and `<Input type="radio" />` only support 
 
 ## Notes
 
-- All styles are the same with react built-in components
-- All react built-in component's props are supported, except `defaultValue` and `defaultChecked`
+- All styles are the same with react built-in inputs
+- All react built-in inputs' props are supported, except `defaultValue` and `defaultChecked`
 - To get the DOM, use `findDOMNode(input)` or `input.dom`. (This `input` refs to an `Input` instance, like `<Input ref="input" />`)
-- DOM value could be changed by user typing without updating `state` or `props`
+- Form data (value or checked) would be handled by the DOM itself.
+- Form data could also be changed by passing new `value` prop to component.
 
 
 ## Caveat
 
-If `value` prop didn't changed, Input component would not re-render. So if you want to reset value by passing the prev `value`, it won't be updated.
+If the new `value` prop is equal to the prev `value` prop, form data would not be updated, even if form data is not equal to the `value` prop.
 
 ```js
 import React, { Component } from 'react';
@@ -66,8 +68,8 @@ class Bad extends Component {
     componentDidMount() {
         findDOMNode(this).value = 'b'; // Simulate user typing
 
-        // Try to reset `value` to "a"
-        // It won't be updated because the new `value` equals the prev `value`
+        // Try to reset `value` to "a", but failed
+        // Because the new `value` prop is equal to the prev `value` prop
         this.setState({ value: 'a' }); // => BAD
     }
 
@@ -81,7 +83,7 @@ render(<Bad />, document.getElementById('root'));
 
 To resolve this problem, you could change the DOM value directly, or add a special `updateKey` prop.
 
-`updateKey` helps Input component to decide to update. If `updateKey` changes, the DOM value would change.
+`updateKey` helps Input component to decide to update. If `updateKey` changes, form data changes.
 
 ```js
 import React, { Component } from 'react';
