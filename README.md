@@ -98,7 +98,7 @@ class Good extends Component {
 
         // Try to reset `value` to "a"
         // Adding a new `updateKey` to force upate
-        this.setState({ value: 'a', updateKey: Math.rondom() }); // => GOOD
+        this.setState({ value: 'a', updateKey: Math.random() }); // => GOOD
     }
 
     render() {
