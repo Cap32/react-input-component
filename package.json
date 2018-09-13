@@ -12,7 +12,7 @@
     "build": "npm run build:cjs && npm run build:es && npm run build:umd && npm run build:min",
     "start": "npm test -- -w",
     "test": "cross-env BABEL_ENV=cjs mocha --compilers js:babel-register ./test",
-    "prepublish": "npm run test && npm run build"
+    "preversion": "npm run test && npm run build"
   },
   "files": [
     "README.md",
