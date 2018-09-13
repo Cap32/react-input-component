@@ -65,5 +65,8 @@
     "react-dom": "^15.4.2",
     "rimraf": "^2.5.4",
     "webpack": "v2.2.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.7"
   }
 }

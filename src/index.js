@@ -1,5 +1,6 @@
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const checkables = ['checkbox', 'radio'];
 const ReactComponent = React.PureComponent || React.Component;
@@ -14,7 +15,7 @@ function createComponent(Component, displayName) {
 		Component === 'input' && checkables.indexOf(props.type) > -1
 	;
 
-	return class Input extends ReactComponent {
+	class InputComponent extends ReactComponent {
 		static propTypes = {
 			value: stringOrNumber,
 			checked: PropTypes.bool,
@@ -24,12 +25,12 @@ function createComponent(Component, displayName) {
 
 		static displayName = displayName;
 
-		componentWillReceiveProps(nextProps) {
+		componentDidUpdate(prevProps) {
 			const { props } = this;
-			const isCheckable = detectIsCheckable(nextProps);
+			const isCheckable = detectIsCheckable(props);
 			const key = isCheckable ? 'checked' : 'value';
-			const val = nextProps[key];
-			if (nextProps.updateKey !== props.updateKey || props[key] !== val) {
+			const val = props[key];
+			if (props.updateKey !== prevProps.updateKey || prevProps[key] !== val) {
 				this.dom[key] = val;
 			}
 		}
@@ -52,7 +53,9 @@ function createComponent(Component, displayName) {
 				/>
 			);
 		}
-	};
+	}
+
+	return InputComponent;
 }
 
 export const TextArea = createComponent('textarea', 'TextArea');
